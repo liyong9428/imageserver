@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Document</title>
+   <style>
+      * {margin: 0;padding: 0}
+      div {
+         width: 300px;
+         height: 430px;
+         background: url(https://ly809652226.github.io/imageserver/bg.jpg);
+         margin: 100px auto;
+         box-sizing: border-box;
+         cursor: pointer;
+      }
+
+      div:hover {
+         background: url(https://ly809652226.github.io/imageserver/hover.jpg);
+      }
+      div:active{ border:20px solid black; }
+
+   </style>
+</head>
+<body>
+   <div></div>
+</body>
+<script>
+   var div = document.querySelector('div');
+   var flag = true;
+   setInterval(function(){
+      if(flag){
+         div.style.background = 'url(https://ly809652226.github.io/imageserver/hover.jpg)';
+         flag = false;
+      }else {
+         div.style.background = 'url(https://ly809652226.github.io/imageserver/bg.jpg)';
+         flag = true
+      }
+      console.log(flag);
+   },500)
+</script>
+</html>
