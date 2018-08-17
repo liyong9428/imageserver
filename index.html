@@ -12,7 +12,7 @@
          height: 100%;
       }
       #box {
-         transition: all .7s;
+         transition: all .5s;
       }
       .page {
          width: 100%;
@@ -39,23 +39,58 @@
       .page:nth-child(5) {
          background: purple;
       }
+
+      ul {
+         position: fixed;
+         right: 10px; 
+         top: 100px;
+      }
+
+      ul li {
+         list-style: none;
+         width: 30px;
+         height: 30px;
+         text-align: center;
+         line-height: 30px;
+         border-radius: 50%;
+         background: #000;
+         color: #fff;
+         margin-top: 10px;
+      }
+      li.on {
+         background: lightseagreen;
+         color: #fff;
+      }
    </style>
 </head>
 <body>
-   <div id="box">
-      <div class="page">第一页</div>
-      <div class="page">第二页</div>
-      <div class="page">第三页</div>
-      <div class="page">第四页</div>
-      <div class="page">第五页</div>
-   </div>   
+   <div class="box">
+      <div id="box">
+         <div class="page">第一页</div>
+         <div class="page">第二页</div>
+         <div class="page">第三页</div>
+         <div class="page">第四页</div>
+         <div class="page">第五页</div>
+      </div>
+
+      <ul>
+         <li>1</li>
+         <li>2</li>
+         <li>3</li>
+         <li>4</li>
+         <li>5</li>
+      </ul>
+   </div>
+  
 </body>
 <script>
 (function (window) {
 
    function Swiper(el) {
-      this.box = document.querySelector(el);
-      this.div = this.box.getElementsByTagName('div');
+      this.bigbox = document.querySelector(el);
+      this.box = this.bigbox.querySelector('#box');
+      this.div = this.bigbox.querySelectorAll('.page');
+      this.lis = this.bigbox.querySelectorAll('li');
       this.oldX = null;
       this.oldY = null;
       this.newX = null;
@@ -74,10 +109,12 @@
          this.div[i].style.height = this.height+'px';
       }
 
+      this.lis[0].className = 'on';
+
       this.box.addEventListener('top',e=>{
          if(this.currentIndex < this.div.length-1){
             this.currentIndex++;
-            this.box.style.transform = 'translateY(-'+this.height*this.currentIndex+'px)';
+            this.go(this.currentIndex)
          }
          
       })
@@ -85,9 +122,17 @@
       this.box.addEventListener('bottom',e=>{
          if(this.currentIndex > 0){ 
             this.currentIndex--; 
-            this.box.style.transform='translateY(-' +this.height*this.currentIndex+'px)'; 
+            this.go(this.currentIndex);
          }
       })
+   }
+   
+   Swiper.prototype.go = function(index){
+      this.box.style.transform='translateY(-' +this.height*index+'px)'; 
+      for(var i=0;i<this.lis.length;i++){
+         this.lis[i].className = '';
+      }
+      this.lis[index].className = 'on'
    }
 
    Swiper.prototype.addEvent = function () {
@@ -139,6 +184,6 @@
 })(window)
 </script>
 <script>
-   var s = new Swiper('#box');
+   var s = new Swiper('.box');
 </script>
 </html>
